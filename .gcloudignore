@@ -1,0 +1,8 @@
+.git
+.gitignore
+node_modules
+_bmad
+_bmad-output
+.claude
+*.md
+README.md

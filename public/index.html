@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#12102a" />
+  <title>Monmon Quest</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <canvas id="game" width="512" height="384"></canvas>
+
+    <!-- HUD (overworld) -->
+    <div id="hud" class="hidden">
+      <div class="hud-left">
+        <span id="hud-name">—</span>
+        <span class="hud-stat">🐾 <b id="hud-caught">0</b></span>
+        <span class="hud-stat">🧩 <b id="hud-party">0</b></span>
+      </div>
+      <div class="hud-right">
+        <button id="btn-party" class="pill">Team</button>
+        <button id="btn-board" class="pill">Ranking</button>
+      </div>
+    </div>
+
+    <!-- Touch dpad -->
+    <div id="dpad" class="hidden">
+      <button data-dir="up">▲</button>
+      <div class="dpad-mid">
+        <button data-dir="left">◀</button>
+        <button data-dir="down">▼</button>
+        <button data-dir="right">▶</button>
+      </div>
+    </div>
+
+    <!-- Battle UI -->
+    <div id="battle-ui" class="hidden">
+      <div id="battle-log">A wild Monmon appears!</div>
+      <div id="battle-actions">
+        <button data-act="fight">⚔️ Fight</button>
+        <button data-act="catch">🔴 Catch</button>
+        <button data-act="run">🏃 Run</button>
+      </div>
+      <div id="move-menu" class="hidden"></div>
+    </div>
+
+    <!-- Title screen -->
+    <div id="title" class="overlay">
+      <div class="panel">
+        <h1>MONMON<span>QUEST</span></h1>
+        <p class="tag">Catch 'em. Battle. Climb the ranking.</p>
+        <div id="title-new">
+          <input id="name-input" maxlength="16" placeholder="Your trainer name" autocomplete="off" />
+          <button id="btn-start" class="primary">Start Adventure</button>
+        </div>
+        <div id="title-continue" class="hidden">
+          <p class="welcome">Welcome back, <b id="continue-name"></b>!</p>
+          <button id="btn-continue" class="primary">Continue</button>
+          <button id="btn-newgame" class="ghost">New game</button>
+        </div>
+        <p class="hint">Move: WASD / arrows · Battle: click or keys 1-4</p>
+      </div>
+    </div>
+
+    <!-- Starter pick -->
+    <div id="starter" class="overlay hidden">
+      <div class="panel">
+        <h2>Choose your first Monmon</h2>
+        <div id="starter-list"></div>
+      </div>
+    </div>
+
+    <!-- Party overlay -->
+    <div id="party-panel" class="overlay hidden">
+      <div class="panel">
+        <h2>Your Team</h2>
+        <div id="party-list"></div>
+        <button class="ghost close-overlay">Close</button>
+      </div>
+    </div>
+
+    <!-- Leaderboard overlay -->
+    <div id="board-panel" class="overlay hidden">
+      <div class="panel">
+        <h2>🏆 Ranking</h2>
+        <div id="board-list">Loading…</div>
+        <button class="ghost close-overlay">Close</button>
+      </div>
+    </div>
+
+    <div id="toast" class="hidden"></div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
