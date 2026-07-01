@@ -24,6 +24,44 @@ BMAD geht strkturiert vor.
 Spezifika einer spezfischen Sprache muss man nicht mehr unbedingt lernen.
 
 
+## Finaler Ouotput
+
+Fertig. Der volle BMAD-YOLO-Workflow ist durchgelaufen — von PRD bis Live-Deployment.
+
+🎮 Deine App ist live
+
+https://monmon-quest-267814974346.europe-west3.run.app
+
+Einfach im Browser öffnen, Trainernamen eingeben, Starter wählen und losspielen (WASD/Pfeile bewegen, ins hohe Gras für Wild-Encounter).
+
+Was gebaut wurde: „Monmon Quest"
+
+Ein 2D-Top-Down-Monsterfänger im Pokémon-Stil mit eigenen Kreaturen (rechtssicher, keine Nintendo-Assets):
+- Overworld mit Kamera, Kollision, hohem Gras & Zufallsbegegnungen — komplett prozedural gezeichnet (keine Bilddateien → schneller Container/Cold-Start)
+- Rundenbasierter Kampf mit Typ-Effektivität (Feuer/Wasser/Pflanze/Elektro/Normal), 10 Spezies, Fangen (mit Wackel-Animation), XP & Level-Up
+- Firestore-Persistenz pro Spieler + globales Leaderboard (Multi-User)
+- Touch-fähig (D-Pad) und Keyboard
+
+BMAD-Artefakte (_bmad-output/)
+
+┌────────────────┬────────────────────────────────────────────────────────────────────────────────┐
+│     Phase      │                                    Artefakt                                    │
+├────────────────┼────────────────────────────────────────────────────────────────────────────────┤
+│ Planning       │ planning-artifacts/prd.md, ux-design.md, architecture.md, epics-and-stories.md │
+├────────────────┼────────────────────────────────────────────────────────────────────────────────┤
+│ Implementation │ Code (server.js, public/, Dockerfile) + implementation-artifacts/deployment.md │
+└────────────────┴────────────────────────────────────────────────────────────────────────────────┘
+
+Architektur & Verifikation
+
+- Ein Node-Container serviert Spielclient + JSON-API; Zustand komplett in Firestore → stateless → skaliert horizontal (min 0 / max 4 Instanzen, Concurrency 80).
+- Live geprüft: health (firestore:true), Save→Reload liefert identische Daten, zwei User = zwei isolierte Docs, Leaderboard rankt korrekt. Meine Test-Profile habe ich danach aus Firestore gelöscht → Ranking startet sauber leer.
+- Unterwegs zwei echte Bugs gefixt: Firestore-Fallback (kein permanentes Abschalten der Instanz bei transientem Fehler) und die Leaderboard-Query ohne Composite-Index-Zwang.
+
+GCP-Setup: APIs aktiviert (run, cloudbuild, artifactregistry, firestore), Runtime-SA …-compute@… mit roles/datastore.user, Deploy in europe-west3 (passend zur bestehenden Firestore-(default)-DB).
+
+Möchtest du als nächstes einen BMAD-Retro (bmad-retrospective), weitere Features (Speichern mehrerer Teams, mehr Monmons, Heilstationen) oder Custom-Domain/Auth?
+
 ## Add on techniques 
 
 ### usage tracking
